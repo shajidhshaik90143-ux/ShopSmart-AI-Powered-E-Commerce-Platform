@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Products{% endblock %}
+{% block content %}
+<h1>Products</h1>
+<form class="search" method="get">
+    <input name="q" value="{{ q }}" placeholder="Search products...">
+    <select name="category">
+        <option value="">All categories</option>
+        {% for c in categories %}<option value="{{ c }}" {% if c==category %}selected{% endif %}>{{ c }}</option>{% endfor %}
+    </select>
+    <button class="btn">Search</button>
+</form>
+<div class="grid">
+{% for p in products %}
+<article class="card">
+    <img src="{{ p.image_url }}" alt="{{ p.name }}">
+    <h3>{{ p.name }}</h3>
+    <p>{{ p.description }}</p>
+    <p>⭐ {{ "%.1f"|format(p.rating) }} • {{ p.stock }} in stock</p>
+    <strong>₹{{ "%.2f"|format(p.price) }}</strong>
+    <div>
+        <a class="btn small" href="{{ url_for('products.product_detail', product_id=p.id) }}">Details</a>
+        {% if current_user %}
+        <form class="inline" method="post" action="{{ url_for('cart.add', product_id=p.id) }}"><button class="btn small">Add to cart</button></form>
+        {% endif %}
+    </div>
+</article>
+{% else %}<p>No matching products.</p>{% endfor %}
+</div>
+{% endblock %}

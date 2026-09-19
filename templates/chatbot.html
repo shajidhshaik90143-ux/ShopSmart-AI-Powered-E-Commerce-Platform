@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}ShopSmart Assistant{% endblock %}
+{% block content %}
+<h1>ShopSmart AI Assistant</h1>
+<form method="post">
+<textarea name="message" placeholder="Ask about products..." required></textarea>
+<button class="btn">Ask</button>
+</form>
+{% if response %}<div class="assistant">{{ response }}</div>{% endif %}
+{% endblock %}

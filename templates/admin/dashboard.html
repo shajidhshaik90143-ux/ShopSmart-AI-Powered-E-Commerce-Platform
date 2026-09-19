@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h1>Admin Dashboard</h1>
+<div class="stats">
+<div><b>{{ data.users }}</b><span>Users</span></div>
+<div><b>{{ data.products }}</b><span>Products</span></div>
+<div><b>{{ data.orders }}</b><span>Orders</span></div>
+<div><b>₹{{ "%.2f"|format(data.revenue) }}</b><span>Revenue</span></div>
+<div><b>{{ data.low_stock }}</b><span>Low Stock</span></div>
+</div>
+<h2>Sales Prediction</h2>
+<p>Predicted units for next 7 days: <strong>{{ prediction.predicted_units }}</strong></p>
+<p>{{ prediction.daily_predictions }}</p>
+<div class="admin-links">
+<a class="btn" href="{{ url_for('admin.products') }}">Products</a>
+<a class="btn" href="{{ url_for('admin.users') }}">Users</a>
+<a class="btn" href="{{ url_for('admin.orders') }}">Orders</a>
+<a class="btn" href="{{ url_for('admin.inventory') }}">Inventory</a>
+<a class="btn" href="{{ url_for('admin.analytics') }}">Analytics</a>
+</div>
+{% endblock %}

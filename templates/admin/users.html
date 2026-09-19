@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Admin Users{% endblock %}
+{% block content %}
+<h1>Users</h1>
+<table><tr><th>ID</th><th>Name</th><th>Email</th><th>Admin</th><th>Joined</th></tr>
+{% for u in users %}<tr><td>{{ u.id }}</td><td>{{ u.name }}</td><td>{{ u.email }}</td><td>{{ u.is_admin }}</td><td>{{ u.created_at.strftime("%d %b %Y") }}</td></tr>{% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}ShopSmart - Home{% endblock %}
+{% block content %}
+<section class="hero">
+    <div>
+        <h1>Smart Shopping Starts Here</h1>
+        <p>Discover products, manage your cart, track orders and get intelligent recommendations.</p>
+        <a class="btn" href="{{ url_for('products.list_products') }}">Shop Products</a>
+    </div>
+</section>
+
+<h2>Latest Products</h2>
+<div class="grid">
+{% for p in products %}
+    <article class="card">
+        <img src="{{ p.image_url }}" alt="{{ p.name }}">
+        <h3>{{ p.name }}</h3>
+        <p>{{ p.category }}</p>
+        <strong>₹{{ "%.2f"|format(p.price) }}</strong>
+        <a class="btn small" href="{{ url_for('products.product_detail', product_id=p.id) }}">View</a>
+    </article>
+{% else %}
+    <p>No products yet. Run <code>python -m database.seed</code>.</p>
+{% endfor %}
+</div>
+{% endblock %}

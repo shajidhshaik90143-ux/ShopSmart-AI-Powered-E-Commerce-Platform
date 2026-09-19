@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Inventory{% endblock %}
+{% block content %}
+<h1>Inventory</h1>
+<table><tr><th>Product</th><th>Category</th><th>Stock</th><th>Price</th></tr>
+{% for p in products %}<tr class="{% if p.stock <= 5 %}low{% endif %}"><td>{{ p.name }}</td><td>{{ p.category }}</td><td>{{ p.stock }}</td><td>₹{{ p.price }}</td></tr>{% endfor %}
+</table>
+{% endblock %}

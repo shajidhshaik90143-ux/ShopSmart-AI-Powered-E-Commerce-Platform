@@ -1,0 +1,269 @@
+```html
+{% extends "base.html" %}
+
+{% block title %}My Orders - ShopSmart{% endblock %}
+
+{% block content %}
+
+<div class="orders-container">
+
+    <div class="orders-header">
+
+        <div>
+            <h1>My Orders</h1>
+            <p>View your ShopSmart purchase history</p>
+        </div>
+
+        <a href="{{ url_for('products.list_products') }}"
+           class="btn btn-primary">
+            Continue Shopping
+        </a>
+
+    </div>
+
+
+    {% if orders %}
+
+        <div class="orders-list">
+
+            {% for order in orders %}
+
+                {# Calculate total for this order #}
+                {% set order_total = namespace(value=0) %}
+
+                {% for item in order.items %}
+                    {% set order_total.value =
+                        order_total.value + (item.price * item.quantity) %}
+                {% endfor %}
+
+
+                <div class="order-card">
+
+                    <div class="order-top">
+
+                        <div>
+
+                            <h2>
+                                Order #{{ order.id }}
+                            </h2>
+
+                            <p class="order-date">
+
+                                Placed on
+
+                                {% if order.created_at %}
+                                    {{ order.created_at.strftime(
+                                        "%d %B %Y, %I:%M %p"
+                                    ) }}
+                                {% else %}
+                                    Date unavailable
+                                {% endif %}
+
+                            </p>
+
+                        </div>
+
+
+                        <div class="order-status">
+
+                            <span class="status-label">
+                                Order Status
+                            </span>
+
+                            <span class="status-value">
+                                {{ order.status }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-info">
+
+                        <div class="info-item">
+
+                            <span>Payment</span>
+
+                            <strong>
+                                {{ order.payment_status }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>Method</span>
+
+                            <strong>
+                                {{ order.payment_method }}
+                            </strong>
+
+                        </div>
+
+
+                        {% if order.payment_id %}
+
+                        <div class="info-item">
+
+                            <span>Transaction ID</span>
+
+                            <strong>
+                                {{ order.payment_id }}
+                            </strong>
+
+                        </div>
+
+                        {% endif %}
+
+
+                        <div class="info-item">
+
+                            <span>Total</span>
+
+                            <strong class="order-total">
+
+                                ₹{{ "%.2f"|format(order_total.value) }}
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-items">
+
+                        <h3>Items</h3>
+
+
+                        {% for item in order.items %}
+
+                            <div class="order-item">
+
+                                <div class="item-image">
+
+                                    {% if item.product
+                                          and item.product.image_url %}
+
+                                        <img
+                                            src="{{ item.product.image_url }}"
+                                            alt="{{ item.product_name }}"
+                                        >
+
+                                    {% else %}
+
+                                        <div class="no-image">
+                                            No Image
+                                        </div>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <div class="item-details">
+
+                                    <h4>
+                                        {{ item.product_name }}
+                                    </h4>
+
+                                    <p>
+                                        Quantity:
+                                        {{ item.quantity }}
+                                    </p>
+
+                                    <p>
+                                        Price:
+                                        ₹{{ "%.2f"|format(item.price) }}
+                                    </p>
+
+                                </div>
+
+
+                                <div class="item-total">
+
+                                    ₹{{ "%.2f"|format(
+                                        item.price * item.quantity
+                                    ) }}
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="delivery-address">
+
+                        <h3>Delivery Address</h3>
+
+                        <p>
+                            {{ order.shipping_address }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="order-footer">
+
+                        <strong>
+
+                            Order Total:
+
+                            ₹{{ "%.2f"|format(order_total.value) }}
+
+                        </strong>
+
+
+                        <a
+                           href="{{ url_for(
+    'orders.detail',
+    order_id=order.id
+) }}"
+                            class="btn btn-secondary"
+                        >
+                            View Details
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-orders">
+
+            <div class="empty-icon">
+                📦
+            </div>
+
+            <h2>No Orders Yet</h2>
+
+            <p>
+                You haven't placed any orders yet.
+                Start shopping and your orders will appear here.
+            </p>
+
+            <a
+                href="{{ url_for('products.list_products') }}"
+                class="btn btn-primary"
+            >
+                Start Shopping
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
+```

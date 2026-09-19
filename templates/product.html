@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ product.name }}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="product-detail">
+
+    <img
+        src="{{ product.image_url }}"
+        alt="{{ product.name }}"
+    >
+
+
+    <div>
+
+        <span class="badge">
+            {{ product.category }}
+        </span>
+
+
+        <h1>
+            {{ product.name }}
+        </h1>
+
+
+        <p>
+            {{ product.description }}
+        </p>
+
+
+        <h2>
+            ₹{{ "%.2f"|format(product.price) }}
+        </h2>
+
+
+        <p>
+
+            Rating:
+            ⭐ {{ "%.1f"|format(product.rating) }}
+
+            |
+
+            Stock:
+            {{ product.stock }}
+
+        </p>
+
+
+        {% if current_user %}
+
+            {% if product.stock > 0 %}
+
+                <div class="product-actions">
+
+
+                    <!-- ADD TO CART -->
+
+                    <form
+                        class="inline"
+                        method="post"
+                        action="{{ url_for(
+                            'cart.add',
+                            product_id=product.id
+                        ) }}"
+                    >
+
+                        <button class="btn">
+
+                            🛒 Add to Cart
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- BUY NOW -->
+
+                    <a
+                        class="btn buy-now"
+                        href="{{ url_for(
+                            'orders.buy_now',
+                            product_id=product.id
+                        ) }}"
+                    >
+
+                        ⚡ Buy Now
+
+                    </a>
+
+
+                    <!-- WISHLIST -->
+
+                    <a
+                        class="btn secondary"
+                        href="{{ url_for(
+                            'wishlist.toggle',
+                            product_id=product.id
+                        ) }}"
+                    >
+
+                        ❤️ Wishlist
+
+                    </a>
+
+
+                </div>
+
+
+            {% else %}
+
+                <button
+                    class="btn danger"
+                    disabled
+                >
+
+                    ❌ Out of Stock
+
+                </button>
+
+            {% endif %}
+
+
+        {% else %}
+
+
+            <a
+                class="btn"
+                href="{{ url_for('auth.login') }}"
+            >
+
+                🔐 Login to Buy
+
+            </a>
+
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- REVIEWS -->
+
+<h2>
+    Customer Reviews
+</h2>
+
+
+{% for review in product.reviews %}
+
+<div class="review">
+
+    <strong>
+        {{ review.user.name }}
+    </strong>
+
+    —
+
+    ⭐ {{ review.rating }}
+
+    <br>
+
+    {{ review.comment }}
+
+    <small>
+        ({{ review.sentiment }})
+    </small>
+
+</div>
+
+
+{% else %}
+
+<p>
+    No reviews yet.
+</p>
+
+{% endfor %}
+
+
+<!-- WRITE REVIEW -->
+
+{% if current_user %}
+
+<form
+    class="form-card"
+    method="post"
+    action="{{ url_for(
+        'reviews.add',
+        product_id=product.id
+    ) }}"
+>
+
+    <h3>
+        Write a Review
+    </h3>
+
+
+    <label>
+        Rating
+    </label>
+
+
+    <select name="rating">
+
+        <option value="5">
+            ⭐⭐⭐⭐⭐ 5
+        </option>
+
+        <option value="4">
+            ⭐⭐⭐⭐ 4
+        </option>
+
+        <option value="3">
+            ⭐⭐⭐ 3
+        </option>
+
+        <option value="2">
+            ⭐⭐ 2
+        </option>
+
+        <option value="1">
+            ⭐ 1
+        </option>
+
+    </select>
+
+
+    <label>
+        Comment
+    </label>
+
+
+    <textarea
+        name="comment"
+        required
+        placeholder="Write your review..."
+    ></textarea>
+
+
+    <button class="btn">
+
+        Submit Review
+
+    </button>
+
+</form>
+
+{% endif %}
+
+{% endblock %}

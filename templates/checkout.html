@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Checkout
+{% endblock %}
+
+
+{% block content %}
+
+<h1>
+    Checkout
+</h1>
+
+
+<div class="checkout-layout">
+
+
+    <!-- ORDER SUMMARY -->
+
+    <div class="checkout-products">
+
+        <h2>
+            🛒 Order Summary
+        </h2>
+
+
+        {% for item in items %}
+
+        <div class="checkout-item">
+
+
+            <img
+                src="{{ item.product.image_url }}"
+                alt="{{ item.product.name }}"
+            >
+
+
+            <div>
+
+                <h3>
+                    {{ item.product.name }}
+                </h3>
+
+
+                <p>
+
+                    Quantity:
+
+                    <strong>
+                        {{ item.quantity }}
+                    </strong>
+
+                </p>
+
+
+                <p>
+
+                    Price:
+
+                    ₹{{ "%.2f"|format(
+                        item.product.price
+                        * item.quantity
+                    ) }}
+
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+
+        <hr>
+
+
+        <h2>
+
+            Total:
+
+            ₹{{ "%.2f"|format(total) }}
+
+        </h2>
+
+    </div>
+
+
+    <!-- PAYMENT -->
+
+    <div class="checkout-payment">
+
+        <form
+            method="post"
+            action="{{ url_for(
+                'orders.checkout'
+            ) }}"
+        >
+
+
+            <!-- ADDRESS -->
+
+            <h2>
+                📍 Delivery Address
+            </h2>
+
+
+            <textarea
+                name="address"
+                required
+                minlength="10"
+                placeholder="House number, street, city, state, PIN"
+            ></textarea>
+
+
+            <!-- PAYMENT METHOD -->
+
+            <h2>
+                💳 Payment Method
+            </h2>
+
+
+            <label class="payment-option">
+
+                <input
+                    type="radio"
+                    name="payment_method"
+                    value="online"
+                    checked
+                >
+
+                <span>
+
+                    💳
+
+                    <strong>
+                        Online Payment
+                    </strong>
+
+                    <small>
+                        Pay using online payment
+                    </small>
+
+                </span>
+
+            </label>
+
+
+            <label class="payment-option">
+
+                <input
+                    type="radio"
+                    name="payment_method"
+                    value="cod"
+                >
+
+                <span>
+
+                    💵
+
+                    <strong>
+                        Cash on Delivery
+                    </strong>
+
+                    <small>
+                        Pay when your order arrives
+                    </small>
+
+                </span>
+
+            </label>
+
+
+            <!-- PAY BUTTON -->
+
+            <button
+                type="submit"
+                class="btn pay-button"
+            >
+
+                🔒 Pay
+                ₹{{ "%.2f"|format(total) }}
+
+            </button>
+
+
+            <p class="payment-note">
+
+                🔐 Your payment information is protected.
+
+                <br>
+
+                This current version uses a simulated
+                payment processor for the project demo.
+
+            </p>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

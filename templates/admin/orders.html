@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Admin Orders{% endblock %}
+{% block content %}
+<h1>All Orders</h1>
+<table><tr><th>ID</th><th>User</th><th>Total</th><th>Status</th><th>Update</th></tr>
+{% for o in orders %}
+<tr><td>#{{ o.id }}</td><td>{{ o.user.email }}</td><td>₹{{ "%.2f"|format(o.total_amount) }}</td><td>{{ o.status }}</td>
+<td><form method="post" action="{{ url_for('admin.update_order_status', order_id=o.id) }}"><select name="status">
+{% for s in ["Placed","Processing","Shipped","Delivered","Cancelled"] %}<option {% if s==o.status %}selected{% endif %}>{{ s }}</option>{% endfor %}
+</select><button class="btn small">Save</button></form></td></tr>
+{% endfor %}</table>
+{% endblock %}

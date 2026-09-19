@@ -1,0 +1,342 @@
+/* Shop-specific styles can be added here. */
+/* ========================================
+   PRODUCT PAGE
+======================================== */
+
+.product-actions {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 20px;
+}
+
+
+.buy-now {
+
+    background: #16a34a;
+
+}
+
+
+.buy-now:hover {
+
+    background: #15803d;
+
+}
+
+
+/* ========================================
+   CHECKOUT
+======================================== */
+
+.checkout-layout {
+
+    display: grid;
+
+    grid-template-columns:
+        1.4fr
+        1fr;
+
+    gap: 25px;
+
+    align-items: start;
+
+}
+
+
+.checkout-products,
+.checkout-payment {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0, 0, 0, .06);
+
+}
+
+
+.checkout-item {
+
+    display: flex;
+
+    gap: 15px;
+
+    padding: 15px 0;
+
+    border-bottom:
+        1px solid #eeeeee;
+
+}
+
+
+.checkout-item img {
+
+    width: 100px;
+
+    height: 80px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+}
+
+
+.checkout-item div {
+
+    flex: 1;
+
+}
+
+
+/* ========================================
+   PAYMENT OPTIONS
+======================================== */
+
+.payment-option {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 18px;
+
+    margin: 12px 0;
+
+    border:
+        2px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+
+.payment-option:hover {
+
+    border-color: #2563eb;
+
+    background: #f8fafc;
+
+}
+
+
+.payment-option input {
+
+    width: auto;
+
+    margin: 0;
+
+}
+
+
+.payment-option span {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+}
+
+
+.payment-option small {
+
+    color: #6b7280;
+
+}
+
+
+/* ========================================
+   PAYMENT BUTTON
+======================================== */
+
+.pay-button {
+
+    width: 100%;
+
+    font-size: 18px;
+
+    padding: 14px;
+
+    margin-top: 20px;
+
+}
+
+
+.payment-note {
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    margin-top: 15px;
+
+}
+
+
+/* ========================================
+   SUCCESS PAGE
+======================================== */
+
+.success-page {
+
+    max-width: 650px;
+
+    margin: 50px auto;
+
+    text-align: center;
+
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 5px 25px
+        rgba(0, 0, 0, .07);
+
+}
+
+
+.success-icon {
+
+    width: 90px;
+
+    height: 90px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+
+    background: #16a34a;
+
+    color: white;
+
+    font-size: 55px;
+
+    line-height: 90px;
+
+}
+
+
+.order-box {
+
+    margin: 25px 0;
+
+    padding: 25px;
+
+    background: #f3f4f6;
+
+    border-radius: 12px;
+
+    text-align: left;
+
+}
+
+
+.order-box hr {
+
+    border: none;
+
+    border-top:
+        1px solid #d1d5db;
+
+    margin: 20px 0;
+
+}
+
+
+/* ========================================
+   ORDERS
+======================================== */
+
+.order {
+
+    margin-bottom: 20px;
+
+}
+
+
+.order-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+}
+
+
+.order-status {
+
+    background: #dbeafe;
+
+    color: #1d4ed8;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 700px) {
+
+    .checkout-layout {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .checkout-item {
+
+        align-items: center;
+
+    }
+
+
+    .payment-option {
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .order-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 10px;
+
+    }
+
+}

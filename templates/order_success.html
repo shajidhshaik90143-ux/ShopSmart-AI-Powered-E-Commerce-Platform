@@ -1,0 +1,107 @@
+```html
+{% extends "base.html" %}
+
+{% block title %}Order Successful - ShopSmart{% endblock %}
+
+{% block content %}
+
+<div class="success-container">
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        {% if order.payment_status == "Paid" %}
+            <h1>Payment Successful!</h1>
+            <p class="success-message">
+                Your payment has been completed successfully.
+                Your order has been placed.
+            </p>
+        {% else %}
+            <h1>Order Confirmed!</h1>
+            <p class="success-message">
+                Your order has been placed successfully.
+            </p>
+        {% endif %}
+
+
+        {# Calculate order total from order items #}
+        {% set order_total = namespace(value=0) %}
+
+        {% for item in order.items %}
+            {% set order_total.value = order_total.value + (item.price * item.quantity) %}
+        {% endfor %}
+
+
+        <div class="order-summary">
+
+            <div class="summary-row">
+                <span>Order ID</span>
+                <strong>#{{ order.id }}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Order Status</span>
+                <strong>{{ order.status }}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Payment Status</span>
+                <strong>{{ order.payment_status }}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Payment Method</span>
+                <strong>{{ order.payment_method }}</strong>
+            </div>
+
+            {% if order.payment_id %}
+            <div class="summary-row">
+                <span>Transaction ID</span>
+                <strong>{{ order.payment_id }}</strong>
+            </div>
+            {% endif %}
+
+            <div class="summary-row total-row">
+                <span>Total Amount</span>
+                <strong>
+                    ₹{{ "%.2f"|format(order_total.value) }}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="delivery-box">
+
+            <h3>Delivery Address</h3>
+
+            <p>
+                {{ order.shipping_address }}
+            </p>
+
+        </div>
+
+
+        <div class="success-actions">
+
+            <a href="{{ url_for('orders.list_orders') }}"
+               class="btn btn-primary">
+                View My Orders
+            </a>
+
+            <a href="{{ url_for('products.list_products') }}"
+               class="btn btn-secondary">
+                Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+```

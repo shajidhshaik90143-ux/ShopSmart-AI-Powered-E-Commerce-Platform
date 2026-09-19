@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="form-card">
+<h1>Profile</h1>
+<form method="post">
+<label>Name</label><input name="name" value="{{ user.name }}" required>
+<label>Email</label><input value="{{ user.email }}" disabled>
+<button class="btn">Save</button>
+</form>
+</div>
+{% endblock %}
